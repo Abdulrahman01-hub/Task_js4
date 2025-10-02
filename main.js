@@ -2,38 +2,42 @@ import { pizzas } from "./data.js";
 
 const table = document.createElement("table");
 const thead = document.createElement("thead");
-const trForThead = document.createElement("tr");
-["Image", "Name", "Description", "Price ($)", "Rate", "Country"].forEach(text => {
+const headRow = document.createElement("tr");
+const columns = ["Image", "Name", "Description", "Price ($)", "Rate", "Country"];
+
+for (let col of columns) {
   const th = document.createElement("th");
-  th.innerText = text;
-  trForThead.append(th);
-});
-thead.append(trForThead);
-table.append(thead);
+  th.textContent = col;
+  headRow.appendChild(th);
+}
+thead.appendChild(headRow);
+table.appendChild(thead);
 
 const tbody = document.createElement("tbody");
-pizzas.forEach(item => {
-  const tr = document.createElement("tr");
 
-  const imgTd = document.createElement("td");
-  const img = document.createElement("img");
-  img.src = item.img;
-  img.alt = item.name;
-  imgTd.appendChild(img);
+for (let item of pizzas) {
+  const row = document.createElement("tr");
 
-  const nameTd = document.createElement("td");
-  nameTd.textContent = item.name;
-  const dscTd = document.createElement("td");
-  dscTd.textContent = item.dsc;
-  const priceTd = document.createElement("td");
-  priceTd.textContent = item.price;
-  const rateTd = document.createElement("td");
-  rateTd.textContent = "⭐".repeat(item.rate);
-  const countryTd = document.createElement("td");
-  countryTd.textContent = item.country;
+  let tdImg = document.createElement("td");
+  let image = document.createElement("img");
+  image.src = item.img;
+  image.alt = item.name;
+  tdImg.appendChild(image);
 
-  tr.append(imgTd, nameTd, dscTd, priceTd, rateTd, countryTd);
-  tbody.appendChild(tr);
-});
-table.append(tbody);
-document.getElementById("root").append(table);
+  let tdName = document.createElement("td");
+  tdName.innerText = item.name;
+  let tdDesc = document.createElement("td");
+  tdDesc.innerText = item.dsc;
+  let tdPrice = document.createElement("td");
+  tdPrice.textContent = item.price;
+  let tdRate = document.createElement("td");
+  tdRate.textContent = "⭐".repeat(item.rate);
+  let tdCountry = document.createElement("td");
+  tdCountry.textContent = item.country;
+
+  row.append(tdImg, tdName, tdDesc, tdPrice, tdRate, tdCountry);
+  tbody.appendChild(row);
+}
+
+table.appendChild(tbody);
+document.querySelector("#root").appendChild(table);
